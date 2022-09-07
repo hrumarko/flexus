@@ -13,7 +13,7 @@ public class BallColider : MonoBehaviour
         if(other.gameObject.tag == "Wall"){
             isContact = false;
             Vector3 pos2 = this.transform.position;
-            Ball.posa =ball.Rebound(pos2);
+            ball.Rebound(pos2.x, pos2.z);
         }
     }
 
@@ -21,6 +21,13 @@ public class BallColider : MonoBehaviour
     {
         if(other.gameObject.tag == "Wall"){
             isContact = false;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if(other.gameObject.tag == "Wall"){
+            isContact = true;
         }
     }
 

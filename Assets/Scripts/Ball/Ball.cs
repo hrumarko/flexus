@@ -15,7 +15,7 @@ public class Ball : MonoBehaviour
     public static Vector3 posa;
     bool shoot;
     bool rebound;
-    
+    Vector3 p;
     public float speed;
     void Start()
     {
@@ -31,9 +31,9 @@ public class Ball : MonoBehaviour
             
         }
         if(rebound){
-            ball1.transform.position = Vector3.Lerp(ball1.transform.position, posa, 2f * Time.deltaTime);
-            ball2.transform.position = Vector3.Lerp(ball2.transform.position, posa, 2f * Time.deltaTime);
+            ball1.transform.position = Vector3.LerpUnclamped(new Vector3(ball1.transform.position.x, ball1.transform.position.y, ball1.transform.position.z),pos2,0.1f);
             
+            Debug.Log("a");
         }
     }
 
@@ -44,16 +44,18 @@ public class Ball : MonoBehaviour
 
     void Control(){
             if(Input.GetMouseButton(0)){
+                
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 shoot = false;
+                rebound = false;
                 BallColider.isContact= true;
-                // if(a == 0){
-                //     a =1;
-                //     RaycastHit hit;
-                //     if(Physics.Raycast(ray, out hit)){
-                //         ball1.transform.position = new Vector3(hit.point.x, -2.54f, hit.point.z);  
-                //     }
-                // }
+                if(a == 0){
+                    a =1;
+                    RaycastHit hit;
+                    if(Physics.Raycast(ray, out hit)){
+                        p = new Vector3(hit.point.x, -2.54f, hit.point.z);  
+                    }
+                }
 
                     RaycastHit hit1;
                     if(Physics.Raycast(ray, out hit1)){
@@ -73,8 +75,16 @@ public class Ball : MonoBehaviour
             }
     }
     private void ShootTrajectory(){
-        float posX= ball1.transform.position.x - ball2.transform.position.x;
-        float posZ =  ball1.transform.position.z - ball2.transform.position.z;
+        // float posX= ball1.transform.position.x - ball2.transform.position.x;
+        // float posZ =  ball1.transform.position.z - ball2.transform.position.z;
+        // pos = new Vector3(posX, -2.52f, posZ);
+        // Vector3 posFT = new Vector3(posX, 0,posZ);
+        // pos = new Vector3(posX, -2.52f, posZ);
+        // pos += new Vector3(ball1.transform.position.x, 0 , ball1.transform.position.z);
+        // float scale = Mathf.Abs(pos.x * pos.z);
+        // trajectory.ShowTrajectory(ball1.transform.position, pos);
+        float posX= p.x - ball2.transform.position.x;
+        float posZ =  p.z - ball2.transform.position.z;
         pos = new Vector3(posX, -2.52f, posZ);
         Vector3 posFT = new Vector3(posX, 0,posZ);
         pos = new Vector3(posX, -2.52f, posZ);
@@ -91,14 +101,13 @@ public class Ball : MonoBehaviour
         trajectoryGO.SetActive(false);
     }
 
-    public Vector3 Rebound(Vector3 pos2){
+    public void Rebound(float x2, float z2){
         rebound = true;
-        float x = pos2.x - pos1.x;
-        float z = (pos1.z)-((pos1.z)-(pos2.z));
-        Debug.Log($"{x} + {z}");
-        posa = new Vector3(x, ball1.transform.position.y, z);
+        float x1= pos1.x;
+        float z1 = pos1.z;
+        pos2 = new Vector3(-(x2-x1),-2.52f, -(z2-z1));        
         
-        return posa;
+        
         
         
     }
