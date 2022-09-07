@@ -5,7 +5,8 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public GameObject ball1;
-    public GameObject ball2;
+    // public GameObject ball2;
+    Vector3 stretchPos;
     public Trajectory trajectory;
     public GameObject trajectoryGO;
     int a = 0;
@@ -29,7 +30,7 @@ public class Ball : MonoBehaviour
         if(shoot){
             Shoot();
         }
-        
+
         if(rebound){
             ball1.transform.position = Vector3.Lerp(ball1.transform.position, finishPos, 2f * Time.deltaTime);
         }
@@ -54,7 +55,7 @@ public class Ball : MonoBehaviour
 
                     RaycastHit hit1;
                     if(Physics.Raycast(ray, out hit1)){
-                        ball2.transform.position = new Vector3(hit1.point.x, -2.54f, hit1.point.z);
+                       stretchPos = new Vector3(hit1.point.x, -2.54f, hit1.point.z);
                     }
                 trajectoryGO.SetActive(true);
                 
@@ -70,8 +71,8 @@ public class Ball : MonoBehaviour
             }
     }
     private void ShootTrajectory(){
-        float posX= p.x - ball2.transform.position.x;
-        float posZ =  p.z - ball2.transform.position.z;
+        float posX= p.x - stretchPos.x;
+        float posZ =  p.z - stretchPos.z;
         pos = new Vector3(posX, -2.52f, posZ);
         Vector3 posFT = new Vector3(posX, 0,posZ);
         pos = new Vector3(posX, -2.52f, posZ);

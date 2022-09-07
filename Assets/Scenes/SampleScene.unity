@@ -168,7 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball1: {fileID: 1600503007}
-  ball2: {fileID: 1957018747}
   trajectory: {fileID: 1503459042}
   trajectoryGO: {fileID: 1503459041}
   speed: 0.06
@@ -748,6 +747,7 @@ GameObject:
   - component: {fileID: 1600503009}
   - component: {fileID: 1600503013}
   - component: {fileID: 1600503014}
+  - component: {fileID: 1600503015}
   m_Layer: 3
   m_Name: Ball
   m_TagString: Untagged
@@ -828,7 +828,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2.52, z: 0}
   m_LocalScale: {x: 0.46, y: 0.46, z: 0.46}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -862,6 +862,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 266565635}
+  animBall: {fileID: 1600503015}
+--- !u!95 &1600503015
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600503007}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1512faa1c9b0e7844aef5b012038cfa6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1957018747
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1957018748
 Rigidbody:
   m_ObjectHideFlags: 0
