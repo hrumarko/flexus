@@ -13,7 +13,7 @@ public class BallColider : MonoBehaviour
         if(other.gameObject.tag == "Wall"){
             isContact = false;
             Vector3 pos2 = this.transform.position;
-            ball.Rebound(pos2.x, pos2.z);
+            ball.Rebound(pos2);
         }
     }
 
