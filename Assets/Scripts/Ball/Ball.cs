@@ -89,8 +89,9 @@ public class Ball : MonoBehaviour
     }
     public void Rebound(Vector3 secondPos){        
         Vector3 vector = secondPos - pos1;
-        vector = new Vector3(-vector.x, vector.y, -vector.z);        
-        finishPos = new Vector3((vector.x + secondPos.x), -2.52f, (secondPos.z - vector.z));        
+        vector = new Vector3(-vector.x, vector.y, vector.z);        
+        finishPos = new Vector3((vector.x + secondPos.x), -2.52f, (secondPos.z + vector.z));
+                
         rebound = true;
         
     }
