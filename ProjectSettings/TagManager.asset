@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
+  - WallVertical
+  - WallHorizontal
+  - Coin
   layers:
   - Default
   - TransparentFX

@@ -39,7 +39,6 @@ public class Ball : MonoBehaviour
    
     void Control(){
             if(Input.GetMouseButton(0)){
-                
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 shoot = false;
                 rebound = false;
@@ -53,14 +52,13 @@ public class Ball : MonoBehaviour
                     }
                 }
 
-                    RaycastHit hit1;
-                    if(Physics.Raycast(ray, out hit1)){
-                       stretchPos = new Vector3(hit1.point.x, -2.54f, hit1.point.z);
-                    }
-                trajectoryGO.SetActive(true);
-                
-                ShootTrajectory();
+                RaycastHit hit1;
+                if(Physics.Raycast(ray, out hit1)){
+                    stretchPos = new Vector3(hit1.point.x, -2.54f, hit1.point.z);
+                }
 
+                trajectoryGO.SetActive(true);
+                ShootTrajectory();
             }
 
             if(Input.GetMouseButtonUp(0)){
@@ -87,13 +85,19 @@ public class Ball : MonoBehaviour
         ball1.transform.position = Vector3.Lerp(ball1.transform.position, pos, 2f * Time.deltaTime);        
         trajectoryGO.SetActive(false);
     }
-    public void Rebound(Vector3 secondPos){        
+    public void Rebound(Vector3 secondPos){
         Vector3 vector = secondPos - pos1;
         vector = new Vector3(-vector.x, vector.y, vector.z);        
         finishPos = new Vector3((vector.x + secondPos.x), -2.52f, (secondPos.z + vector.z));
-                
         rebound = true;
         
+    }
+
+    public void ReboundHor(Vector3 secondPos){        
+        Vector3 vector = secondPos - pos1;
+        vector = new Vector3(vector.x, vector.y, -vector.z);        
+        finishPos = new Vector3((vector.x + secondPos.x), -2.52f, (secondPos.z + vector.z));
+        rebound = true;
     }
 
     

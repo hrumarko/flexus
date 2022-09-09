@@ -10,12 +10,25 @@ public class BallColider : MonoBehaviour
     public Animator animBall;
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == "Wall"){
+        
+        if(other.gameObject.tag == "WallVertical"){
+            Debug.Log($"a");
             isContact = false;
             Vector3 pos2 = this.transform.position;
             ball.Rebound(pos2);
             animBall.SetBool("isTouched", true);
             StartCoroutine(AnimationOff());
+        }
+        if(other.gameObject.tag == "WallHorizontal"){
+            isContact = false;
+            Vector3 pos2 = this.transform.position;
+            ball.ReboundHor(pos2);
+            animBall.SetBool("isTouched", true);
+            StartCoroutine(AnimationOff());
+        }
+        if(other.gameObject.tag == "Coin"){
+            Destroy(other.gameObject);
+            Score.ScoreCount++;
         }
     }
 
