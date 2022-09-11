@@ -16,8 +16,10 @@ public class Ball : MonoBehaviour
     
     bool shoot;
     bool rebound;
+    
     Vector3 p;
-    public float speed;
+    public Wall wall;
+    
     void Start()
     {
         
@@ -27,13 +29,14 @@ public class Ball : MonoBehaviour
     void Update()
     {
         Control();
+        
         if(shoot){
             Shoot();
         }
-
         if(rebound){
             ball1.transform.position = Vector3.Lerp(ball1.transform.position, finishPos, 2f * Time.deltaTime);
         }
+        
     }
 
    
@@ -42,6 +45,7 @@ public class Ball : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 shoot = false;
                 rebound = false;
+                
                 BallColider.isContact= true;
                 if(a == 0){
                     a =1;
@@ -75,22 +79,31 @@ public class Ball : MonoBehaviour
         Vector3 posFT = new Vector3(posX, 0,posZ);
         pos = new Vector3(posX, -2.52f, posZ);
         pos += new Vector3(ball1.transform.position.x, 0 , ball1.transform.position.z);
-        float scale = Mathf.Abs(pos.x * pos.z);
+        // float scale = Mathf.Abs(pos.x * pos.z);
         trajectory.ShowTrajectory(ball1.transform.position, pos);
         
     }
 
     public void Shoot(){
         if(!BallColider.isContact) shoot = false;
-        ball1.transform.position = Vector3.Lerp(ball1.transform.position, pos, 2f * Time.deltaTime);        
+        ball1.transform.position = Vector3.Lerp(ball1.transform.position, pos, 2f * Time.deltaTime);
+              
         trajectoryGO.SetActive(false);
     }
-    public void Rebound(Vector3 secondPos){
-        Vector3 vector = secondPos - pos1;
-        vector = new Vector3(-vector.x, vector.y, vector.z);        
-        finishPos = new Vector3((vector.x + secondPos.x), -2.52f, (secondPos.z + vector.z));
-        rebound = true;
+    public void Rebound(Wall wall, string direction){
+        finishPos = wall.PositionRebound(pos, direction);
+        // Vector3 peres = pos- secondPos;
+        // float force = Long(peres.x, peres.z);
+        // Debug.Log(force);
+        // if(Mathf.Abs(force)> 1)
+        // {
+            
+        // }else{
+        //     peres = new Vector3(-peres.x, peres.y, peres.z);
+        //     finishPos = new Vector3((peres.x + secondPos.x), -2.52f, (secondPos.z + peres.z));
+        // }
         
+        rebound = true;
     }
 
     public void ReboundHor(Vector3 secondPos){        
@@ -98,6 +111,17 @@ public class Ball : MonoBehaviour
         vector = new Vector3(vector.x, vector.y, -vector.z);        
         finishPos = new Vector3((vector.x + secondPos.x), -2.52f, (secondPos.z + vector.z));
         rebound = true;
+    }
+    IEnumerator TimeFly(){
+        yield return new WaitForSeconds(1.3f);
+        
+    }
+
+    public float Long(float x1, float z1){
+        float a = Mathf.Pow(x1, 2)+ Mathf.Pow(z1, 2);
+        a = Mathf.Abs(a);
+        a = Mathf.Sqrt(a);
+        return a;
     }
 
     

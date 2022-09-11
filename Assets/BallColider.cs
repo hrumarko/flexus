@@ -6,29 +6,32 @@ public class BallColider : MonoBehaviour
 {
     public static bool isContact = true;
     [SerializeField] Ball ball;
+    public GameObject particles;
+    public GameObject particlesCoin;
 
     public Animator animBall;
     private void OnCollisionEnter(Collision other)
     {
         
-        if(other.gameObject.tag == "WallVertical"){
-            Debug.Log($"a");
+        if(other.gameObject.tag == "RWall" || other.gameObject.tag == "LWall"){
+            string direction = "HORIZONTAL";
+            var wall = other.gameObject.GetComponent<Wall>();
             isContact = false;
-            Vector3 pos2 = this.transform.position;
-            ball.Rebound(pos2);
-            animBall.SetBool("isTouched", true);
-            StartCoroutine(AnimationOff());
+            ball.Rebound(wall,direction);
+            AnimationOn();
         }
-        if(other.gameObject.tag == "WallHorizontal"){
+        if(other.gameObject.tag == "UPWall" || other.gameObject.tag == "DWall"){
+            string direction = "VERTICAL";
+            var wall = other.gameObject.GetComponent<Wall>();
             isContact = false;
-            Vector3 pos2 = this.transform.position;
-            ball.ReboundHor(pos2);
-            animBall.SetBool("isTouched", true);
-            StartCoroutine(AnimationOff());
+            ball.Rebound(wall,direction);
+            AnimationOn();
         }
         if(other.gameObject.tag == "Coin"){
             Destroy(other.gameObject);
             Score.ScoreCount++;
+            GameObject partCoin = Instantiate(particlesCoin, this.transform.position, Quaternion.identity);
+            Destroy(partCoin, 1.1f);
         }
     }
 
@@ -45,6 +48,12 @@ public class BallColider : MonoBehaviour
             isContact = true;
             
         }
+    }
+    void AnimationOn(){
+        animBall.SetBool("isTouched", true);
+            StartCoroutine(AnimationOff());
+            GameObject partGO = Instantiate(particles, this.transform.position, Quaternion.identity);
+            Destroy(partGO, 1.1f);
     }
     IEnumerator AnimationOff(){
         yield return new WaitForSeconds(0.2f);
