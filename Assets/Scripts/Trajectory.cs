@@ -10,17 +10,12 @@ public class Trajectory : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         
     }
-    void Update(){
 
-    }
-
-    // Update is called once per frame
     public void ShowTrajectory(Vector3 pos, Vector3 pos2){
         Vector3[] points = new Vector3[2];
         _lineRenderer.positionCount = points.Length;
         points[0] = pos;
         points[1]= pos2;
-        
         _lineRenderer.SetPositions(points);
     }
 }

@@ -8,6 +8,10 @@ TagManager:
   - WallVertical
   - WallHorizontal
   - Coin
+  - RWall
+  - LWall
+  - UPWall
+  - DWall
   layers:
   - Default
   - TransparentFX

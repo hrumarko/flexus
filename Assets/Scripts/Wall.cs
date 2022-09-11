@@ -15,11 +15,7 @@ public class Wall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        p = transform.forward;
-        //Debug.Log(p);
-        
-        
-        Debug.DrawLine(transform.position,p*100);
+
     }
 
     public Vector3 PositionRebound(Vector3 pos, string direction){
